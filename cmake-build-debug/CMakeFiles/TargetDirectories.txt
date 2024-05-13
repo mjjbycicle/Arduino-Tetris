@@ -1,0 +1,3 @@
+D:/Michael/Arduino-Tetris/cmake-build-debug/CMakeFiles/Tetris.dir
+D:/Michael/Arduino-Tetris/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Michael/Arduino-Tetris/cmake-build-debug/CMakeFiles/rebuild_cache.dir
