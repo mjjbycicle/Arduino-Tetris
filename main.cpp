@@ -20,7 +20,9 @@ void setup() {
 }
 
 void loop() {
-    for (int i = 0; i < loop1second; i++){
+    int cooldownLoops = loop1second * 0.05;
+    int cooldown = cooldownLoops;
+    for (int i = 0; i < loop1second * cycleTime; i++){
 
     }
     cout << 1 << " loop" << endl;
