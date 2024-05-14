@@ -20,7 +20,7 @@ int xWidth = 10, yHeight = 24;
 class Display{
 public:
     matrixVec matrix;
-    std::vector<DisplayBlock> blocks;//ordered by most recent -> oldest
+    DisplayBlock currentBlock;//ordered by most recent -> oldest
     std::vector<Block> nextBlocks;
 
     Display(){
@@ -29,27 +29,38 @@ public:
 
     void addNewBlock(){
         nextBlocks.insert(nextBlocks.begin(), types[blockTypeGen(generator)]);
-        blocks.insert(blocks.begin(), DisplayBlock(nextBlocks[numBackLoaded], matrix));
+        currentBlock = DisplayBlock(nextBlocks[numBackLoaded], matrix);
         nextBlocks.pop_back();
     }
-
-    void removeSetBlocks(){
-        std::remove_if(blocks.begin(), blocks.end(), [&](const auto &item) {
-            return item.set;
-        });
+    
+    void cycle(){
+        currentBlock.moveDown(matrix);
     }
 
-    void checkForLines(){
+    std::vector<int> checkForLines(){
+        std::vector<int> res;
+        int currLines = 0;
         for (int currLine = yHeight - 1; currLine >= 0; currLine--){
             int full = true;
             for (auto currBlock : matrix[currLine]){
                 if (currBlock == Block::NONE) full = false;
             }
             if (full){
+                currLines++;
                 moveDownAbove(currLine);
                 currLine++;
             }
+            else{
+                if (currLines != 0){
+                    res.push_back(currLines);
+                    currLines = 0;
+                }
+            }
         }
+        if (currLines != 0){
+            res.push_back(currLines);
+        }
+        return res;
     }
 
     void moveDownAbove(int line){
